@@ -1,6 +1,7 @@
 const express=require('express');
 const fullRoutes = require('./Routings/productManager');
 const adminRoutes=require('./Routings/AdminRoutes');
+const commentsRoutes=require('./Routings/CommentsRoutes');
 const Parsbdy=require('body-parser');
 const mongoose=require('mongoose');
 const app = express();
@@ -30,6 +31,7 @@ mongoose.connect(mongouri, {
 
 app.use(Parsbdy.json());
 app.use('/admin', adminRoutes);
+app.use('/comment', commentsRoutes);
 
 //custom error handling
 app.use(function(erro,rq,res,next){
