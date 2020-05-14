@@ -11,5 +11,5 @@ const commentSchema = new Schema({
     user: {type: Number, required: true},
 });
 
-const Category=mongoose.model('comments',commentSchema);
+
 module.exports = mongoose.model('comment', commentSchema);
