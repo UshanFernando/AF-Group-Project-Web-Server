@@ -11,5 +11,5 @@ const RegisterSchema = new Schema({
     password: {type: Number, required: true},
 });
 
-const Reister=mongoose.model('comments',RegisterSchema);
-module.exports = mongoose.model('comment', RegisterSchema);
+
+module.exports = mongoose.model('register', RegisterSchema);
