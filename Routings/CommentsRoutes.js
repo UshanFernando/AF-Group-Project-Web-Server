@@ -1,9 +1,9 @@
 const express=require('express');
 const router=express.Router();
-const Category = require('../schema/Comment');
+const Comment = require('../schema/Comment');
 
 router.post('/newComment', function (req, res, next) {
-    Category.create({
+  Comment.create({
       
       name: req.body.name,
       message: req.body.message,
@@ -18,11 +18,17 @@ router.post('/newComment', function (req, res, next) {
 });
 
 router.get('/comments',function(req,res,next){
-    Category.find({}).then(function(item){
+  Comment.find({}).then(function(item){
+      res.send(item);
+    });
+});
+
+router.get('/comments/:id',function(req,res,next){
+  const userId=req.params.id;
+  Comment.find({_id:userId}).then(function(item){
       res.send(item);
     });
 });
   
 
- 
 module.exports=router;
