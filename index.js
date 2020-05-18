@@ -4,6 +4,7 @@ const adminRoutes=require('./Routings/AdminRoutes');
 const commentsRoutes=require('./Routings/CommentsRoutes');
 const registerRoutes=require('./Routings/RegisterRoutes');
 const cartRoutes=require('./Routings/CartRoutes');
+const loginRoutes=require('./Routings/LoginRoutes');
 const Parsbdy=require('body-parser');
 const mongoose=require('mongoose');
 const app = express();
@@ -36,6 +37,7 @@ app.use('/admin', adminRoutes);
 app.use('/comment', commentsRoutes);
 app.use('/register', registerRoutes);
 app.use('/cart', cartRoutes);
+app.use('/login', loginRoutes);
 
 //custom error handling
 app.use(function(erro,rq,res,next){
