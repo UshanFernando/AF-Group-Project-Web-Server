@@ -3,6 +3,7 @@ const fullRoutes = require('./Routings/productManager');
 const adminRoutes=require('./Routings/AdminRoutes');
 const commentsRoutes=require('./Routings/CommentsRoutes');
 const registerRoutes=require('./Routings/RegisterRoutes');
+const cartRoutes=require('./Routings/CartRoutes');
 const Parsbdy=require('body-parser');
 const mongoose=require('mongoose');
 const app = express();
@@ -34,6 +35,7 @@ app.use(Parsbdy.json());
 app.use('/admin', adminRoutes);
 app.use('/comment', commentsRoutes);
 app.use('/register', registerRoutes);
+app.use('/cart', cartRoutes);
 
 //custom error handling
 app.use(function(erro,rq,res,next){
