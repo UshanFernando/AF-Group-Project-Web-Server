@@ -19,6 +19,25 @@ router.get("/category", function (req, res, next) {
   });
 });
 
+router.put("/category", function (req, res, next) {
+  Category.findByIdAndUpdate(
+    { _id: req.body.id },
+    {
+      name: req.body.name,
+    }
+  ).then(function () {
+    Category.findOne({ _id: req.body.id }).then(function (single) {
+      res.send(single);
+    });
+  });
+});
+
+router.delete("/category", function (req, res, next) {
+  Category.findByIdAndRemove({ _id: req.body.id }).then(function (item) {
+    res.send(item);
+  });
+});
+
 router.get("/stats", async function (req, res, next) {
   let cateCount = -1;
   let userCount = -1;
