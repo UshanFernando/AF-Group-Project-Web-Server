@@ -1,44 +1,42 @@
 const mongoose=require('mongoose');
-const Schema =mongoose.Schema;
-mongoose.set('useFindAndModify', false);
 
-const StoreManagerProducts=new Schema({
+const StoreManagerProducts=mongoose.Schema({
 
-   Productname:{
+    _id:mongoose.Schema.Types.ObjectId,
+
+   productname:{
       type:String,
       required:[true,"Productname should be defined"]
     },
-      Category:{
+      category:{
         type:String,
-        required:[true,"Category should be defined"]
+    
       },
-      Price:{
-        type:String,
+      price:{
+        type:Number,
         required:[true,"Price should be defined"]
       },
-      Discount:{
-        type:String,
+      discount:{
+        type:Number,
         required:[true,"Discount should be defined"]
       },
-      Description:{
+      description:{
         type:String,
         required:[true,"Description should be defined"]
       },
-      Image:{
+      productImage:{
         type:String,
-        required:[true,"Image should be defined"]
+        required:true
       },
-      StoreMangerID:{
-        type:String,
-        required:[true,"StoreMangerID should be defined"]
+      storeMangerID:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'register'
       }
   });
   
-  const StoreMangerProduct=mongoose.model('productCategories',StoreManagerProducts);
-  module.exports=Category;
+  module.exports=mongoose.model('StoreProducts',StoreManagerProducts);
+ 
   
 
 
 
-//Mongo db  Schema
-module.exports=FireAlarm;

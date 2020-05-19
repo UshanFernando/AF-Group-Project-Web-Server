@@ -12,3 +12,4 @@ const category=new Schema({
 
 const Category=mongoose.model('productCategories',category);
 module.exports=Category;
+
