@@ -6,6 +6,8 @@ const commentsRoutes = require('./Routings/CommentsRoutes');
 const registerRoutes = require('./Routings/RegisterRoutes');
 const Parsbdy = require('body-parser');
 const mongoose = require('mongoose');
+const cartRoutes=require('./Routings/CartRoutes');
+const loginRoutes=require('./Routings/LoginRoutes');
 const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
@@ -39,6 +41,8 @@ app.use(Parsbdy.json());
 app.use('/admin', adminRoutes);
 app.use('/comment', commentsRoutes);
 app.use('/register', registerRoutes);
+app.use('/cart', cartRoutes);
+app.use('/login', loginRoutes);
 
 app.use('/storemanger', storeMangerRoutes);
 
@@ -69,8 +73,7 @@ app.use((error, req, res, next) => {
   });
 });
 
-// const productManagerRouter = require('./routes/products');//route eke mulata ena kotasa set krala tiyenne,meke nam product managwr eke url ekata kalin kotasa set karala tiyenne
-// app.use('/products', productManagerRouter);
+
 
 app.listen(port, function () {
   console.log(`Server is running on port: ${port}`);
