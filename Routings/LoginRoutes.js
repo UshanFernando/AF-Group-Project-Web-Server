@@ -1,36 +1,31 @@
-const express=require('express');
-const router=express.Router();
-const Register = require('../schema/Register');
+const express = require("express");
+const router = express.Router();
+const Register = require("../schema/Register");
+const jwt = require("jsonwebtoken");
+const bodyParser = require("body-parser");
+require("dotenv").config();
 
-router.post('/login', function (req, res) {
+const accessTokenSecret = process.env.TOKEN_SECRET;
 
-    console.log(req.body);
-    let Email=req.body.email;
-    console.log(Email);
+router.post("/login", async function (req, res) {
+  const user = await Register.findOne({
+    email: req.body.email,
+    password: req.body.password,
+  });
 
-   Register.findOne({email:Email },function(loginUser){
-        console.log(loginUser);
-        if(loginUser){
-            console.log('email match');
-            Register.findOne({password: req.body.password},function(User){
-                if(User){
+  if (user) {
+    // Generate an access token
+    const accessToken = jwt.sign(
+      { id: user._id, role: user.utype },
+      accessTokenSecret
+    );
 
-                    console.log('Ok');
-                    // res.redirect('../Containers/Home/Home' );
-                }else{
-                    console.log('error1');
-                    res.redirect('../login');
-                }
-            })
-        }else{
-            console.log('error2');
-            res.redirect('../login');
-        }
-    })
- 
+    res.json({
+      accessToken,
+    });
+  } else {
+    res.json({ error: "Username or password incorrect" });
+  }
 });
 
-
-  
-
-module.exports=router;
+module.exports = router;

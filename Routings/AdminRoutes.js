@@ -2,11 +2,13 @@ const express = require("express");
 const router = express.Router();
 const Category = require("../schema/Category");
 const Register = require("../schema/Register");
+const Product = require("../schema/StoreManagerProducts");
+const auth = require("../Authentication/Auth");
 
-require('dotenv').config();
+require("dotenv").config();
 
-const mailAccountUser =  process.env.MAIL_USER_NAME;
-const mailAccountPassword =  process.env.MAIL_PASSWORD;
+const mailAccountUser = process.env.MAIL_USER_NAME;
+const mailAccountPassword = process.env.MAIL_PASSWORD;
 
 const nodemailer = require("nodemailer");
 const smtpTransport = require("nodemailer-smtp-transport");
@@ -21,23 +23,39 @@ const transport = nodemailer.createTransport(
   })
 );
 
-router.post("/storemanager", function (req, res, next) {
+router.post("/storemanager", auth, async function (req, res, next) {
+  const { role } = req.user;
+
+  if (role !== "admin") {
+    return res.sendStatus(403);
+  }
+  const validEmail = await Register.findOne({ email: req.body.email });
+  if (validEmail) {
+    return res.json({
+      error: "This Email is already registered in the system",
+    });
+  }
+  let passGenaretd = genPassword();
   Register.create({
     utype: "sm",
     fname: req.body.fname,
     lname: req.body.lname,
     email: req.body.email,
-    password: genPassword(),
+    password: passGenaretd,
   })
     .then(function (item) {
-      res.send(item);
+      res.json({ ok: "User Registered as a Store Manager Succefully!" });
+
       let mail = {
         from: mailAccountUser,
         to: req.body.email,
         subject: "You have been promoted as store manager",
         text: "Use This username and password to log into site",
         html:
-          '<b>Hello!</b><p><a href="http://www.yahoo.com">Click Here</a></p>',
+          "<b>Email : " +
+          req.body.email +
+          "</b> <br/> <b> Password : " +
+          passGenaretd,
       };
       transport.sendMail(mail, function (error, response) {
         if (error) {
@@ -52,7 +70,32 @@ router.post("/storemanager", function (req, res, next) {
     .catch(next);
 });
 
-router.post("/category", function (req, res, next) {
+router.get("/storemanager", auth, function (req, res, next) {
+  const { role } = req.user;
+  if (role !== "admin") {
+    return res.sendStatus(403);
+  }
+  Register.find({ utype: "sm" }).then(function (item) {
+    res.send(item);
+  });
+});
+
+router.delete("/storemanager", auth, function (req, res, next) {
+  const { role } = req.user;
+  if (role !== "admin") {
+    return res.sendStatus(403);
+  }
+  Register.findByIdAndRemove({ _id: req.body.id }).then(function (item) {
+    res.send(item);
+  });
+});
+
+router.post("/category", auth, function (req, res, next) {
+  const { role } = req.user;
+
+  if (role !== "admin") {
+    return res.sendStatus(403);
+  }
   Category.create({
     name: req.body.name,
   })
@@ -68,7 +111,12 @@ router.get("/category", function (req, res, next) {
   });
 });
 
-router.put("/category", function (req, res, next) {
+router.put("/category", auth, function (req, res, next) {
+  const { role } = req.user;
+
+  if (role !== "admin") {
+    return res.sendStatus(403);
+  }
   Category.findByIdAndUpdate(
     { _id: req.body.id },
     {
@@ -81,13 +129,24 @@ router.put("/category", function (req, res, next) {
   });
 });
 
-router.delete("/category", function (req, res, next) {
+router.delete("/category", auth, function (req, res, next) {
+  const { role } = req.user;
+
+  if (role !== "admin") {
+    return res.sendStatus(403);
+  }
+
   Category.findByIdAndRemove({ _id: req.body.id }).then(function (item) {
     res.send(item);
   });
 });
 
-router.get("/stats", async function (req, res, next) {
+router.get("/stats", auth, async function (req, res, next) {
+  const { role } = req.user;
+
+  if (role !== "admin") {
+    return res.sendStatus(403);
+  }
   let cateCount = -1;
   let userCount = -1;
   cateCount = await Category.find({}).then(function (item) {
@@ -96,9 +155,22 @@ router.get("/stats", async function (req, res, next) {
   userCount = await Register.find({}).then(function (item) {
     return item.length;
   });
+
+  productCount = await Product.find({}).then(function (item) {
+    return item.length;
+  });
+
+  storemanagerCount = await Register.find({ utype: "sm" }).then(function (
+    item
+  ) {
+    return item.length;
+  });
+
   res.json({
     categories: cateCount,
     users: userCount,
+    products: productCount,
+    storemanagers: storemanagerCount,
   });
 });
 
