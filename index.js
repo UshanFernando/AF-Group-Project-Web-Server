@@ -1,13 +1,14 @@
-const express = require("express");
-const fis = require("fs");
-const storeMangerRoutes = require("./Routings/StoreMangerRoutes/StoreMangerRoutes");
-const adminRoutes = require("./Routings/AdminRoutes");
-const commentsRoutes = require("./Routings/CommentsRoutes");
-const registerRoutes = require("./Routings/RegisterRoutes");
-const Parsbdy = require("body-parser");
-const mongoose = require("mongoose");
-const cartRoutes = require("./Routings/CartRoutes");
-const loginRoutes = require("./Routings/LoginRoutes");
+const express = require('express');
+const fis=require('fs');
+const storeMangerRoutes = require('./Routings/StoreMangerRoutes/StoreMangerRoutes');
+const adminRoutes = require('./Routings/AdminRoutes');
+const commentsRoutes = require('./Routings/CommentsRoutes');
+const wishListRoutes = require('./Routings/WishlistRoutes');
+const registerRoutes = require('./Routings/RegisterRoutes');
+const Parsbdy = require('body-parser');
+const mongoose = require('mongoose');
+const cartRoutes=require('./Routings/CartRoutes');
+const loginRoutes=require('./Routings/LoginRoutes');
 const app = express();
 const cors = require("cors");
 const morgan = require("morgan");
@@ -42,11 +43,12 @@ app.use(morgan("dev"));
 app.use("/uploads", express.static("uploads"));
 app.use(Parsbdy.json());
 
-app.use("/admin", adminRoutes);
-app.use("/comment", commentsRoutes);
-app.use("/register", registerRoutes);
-app.use("/cart", cartRoutes);
-app.use("/login", loginRoutes);
+app.use('/admin', adminRoutes);
+app.use('/comment', commentsRoutes);
+app.use('/register', registerRoutes);
+app.use('/cart', cartRoutes);
+app.use('/wishList', wishListRoutes);
+app.use('/login', loginRoutes);
 
 app.use("/storemanger", storeMangerRoutes);
 
