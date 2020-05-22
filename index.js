@@ -3,6 +3,7 @@ const fis=require('fs');
 const storeMangerRoutes = require('./Routings/StoreMangerRoutes/StoreMangerRoutes');
 const adminRoutes = require('./Routings/AdminRoutes');
 const commentsRoutes = require('./Routings/CommentsRoutes');
+const wishListRoutes = require('./Routings/WishlistRoutes');
 const registerRoutes = require('./Routings/RegisterRoutes');
 const Parsbdy = require('body-parser');
 const mongoose = require('mongoose');
@@ -42,6 +43,7 @@ app.use('/admin', adminRoutes);
 app.use('/comment', commentsRoutes);
 app.use('/register', registerRoutes);
 app.use('/cart', cartRoutes);
+app.use('/wishList', wishListRoutes);
 app.use('/login', loginRoutes);
 
 app.use('/storemanger', storeMangerRoutes);
