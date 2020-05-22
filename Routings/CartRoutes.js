@@ -2,7 +2,6 @@ const express=require('express');
 const router=express.Router();
 const Cart = require('../schema/Cart');
 const auth = require("../Authentication/Auth");
-const CartPrducts = require('../schema/CartProduct');
 const StoreProducts = require('../schema/StoreManagerProducts');
 
 router.post('/newCart',auth, function (req, res, next) {
