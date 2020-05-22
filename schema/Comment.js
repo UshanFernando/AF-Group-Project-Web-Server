@@ -7,8 +7,8 @@ const commentSchema = new Schema({
     name: { type: String},
     message: { type: String},
     rating: { type: Number, required: true },
-    //user: {type: mongoose.Types.ObjectId, required: true, ref: 'User' },
-    user: {type: Number, required: true},
+    user: {type: mongoose.Types.ObjectId, required: true, ref: 'register' },
+    //user: {type: Number, required: true},
 });
 
 
