@@ -102,24 +102,86 @@ router.get('/products/:productId',(req,res,next)=>{
 
 
 
-router.patch('/products/:pidd',ImageUpload.single('productImage'),(req,res,next)=>{
-    const producid=req.params.pidd;
-    StoreProducts.update({_id:producid},{$set:{
-        productname:req.body.productname,
-        category:req.body.category,
-        price:req.body.price,
-        discount:req.body.price,
-        description:req.body.description,
-        //image: ,
-        storeMangerID:req.body.storeMangerID}
-    }).exec().then(singleitem=>{
-        res.status(200).json(singleitem);
+
+
+router.get('/products/category/:categoryname',(req,res,next)=>{
+    const catgname=req.params.categoryname;
+    StoreProducts.find({category:catgname}).exec()
+    .then(oneitem=>{
+        console.log(oneitem);
+        if(oneitem){
+            res.status(200).json(oneitem);
+        }else{
+            res.status(404).json({warning:'No any category found to retriew'});
+        }
+        
     })
     .catch(err=>{
-        res.status(500).json({
-            error:err
-        });
+        console.log(err);
+        res.status(500).json({error:err});
+
     });
+   
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+router.patch('/products/:pidd',ImageUpload.single('productImage'),(req,res,next)=>{
+    const producid=req.params.pidd;
+            if(req.file){
+                console.log("file found");
+                StoreProducts.update({_id:producid},{$set:{
+                    productname:req.body.productname,
+                    category:req.body.category,
+                    price:req.body.price,
+                    discount:req.body.discount,
+                    description:req.body.description,
+                    productImage:req.file.path.replace("\\","/"),
+                    storeMangerID:req.body.storeMangerID}
+                }).exec().then(singleitem=>{
+                    res.status(200).json(singleitem);
+                })
+                .catch(err=>{
+                    res.status(500).json({
+                        error:err
+                    });
+                });
+            
+            }
+            else{
+                console.log("file  cannot found");
+                StoreProducts.update({_id:producid},{$set:{
+                    productname:req.body.productname,
+                    category:req.body.category,
+                    price:req.body.price,
+                    discount:req.body.discount,
+                    description:req.body.description,
+                    storeMangerID:req.body.storeMangerID}
+                }).exec().then(singleitem=>{
+                    res.status(200).json(singleitem);
+                })
+                .catch(err=>{
+                    res.status(500).json({
+                        error:err
+                    });
+                });
+            
+            }
+
+   // console.log(req.file)
+   
 });
 
 

@@ -26,7 +26,7 @@ const StoreManagerProducts=mongoose.Schema({
       },
       productImage:{
         type:String,
-        required:true
+    
       },
       storeMangerID:{
         type:mongoose.Schema.Types.ObjectId,
