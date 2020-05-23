@@ -5,7 +5,11 @@ const adminRoutes = require('./Routings/AdminRoutes');
 const commentsRoutes = require('./Routings/CommentsRoutes');
 const wishListRoutes = require('./Routings/WishlistRoutes');
 const registerRoutes = require('./Routings/RegisterRoutes');
+<<<<<<< HEAD
 const resetRoutes = require('./Routings/ResetRoutes')
+=======
+const categoryRoutes = require('./Routings/CategoryRoutes');
+>>>>>>> 246b8d9e0ee13b7b364586f5dab8388de9a14ce9
 const Parsbdy = require('body-parser');
 const mongoose = require('mongoose');
 const cartRoutes=require('./Routings/CartRoutes');
@@ -47,7 +51,11 @@ app.use(Parsbdy.json());
 app.use('/admin', adminRoutes);
 app.use('/comment', commentsRoutes);
 app.use('/register', registerRoutes);
+<<<<<<< HEAD
 app.use('/reset', resetRoutes);
+=======
+app.use('/category', categoryRoutes);
+>>>>>>> 246b8d9e0ee13b7b364586f5dab8388de9a14ce9
 app.use('/cart', cartRoutes);
 app.use('/wishList', wishListRoutes);
 app.use('/login', loginRoutes);

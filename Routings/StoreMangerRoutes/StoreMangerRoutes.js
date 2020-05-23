@@ -23,7 +23,7 @@ const Imagfilter=(req,file,cb)=>{
 };
 
 const ImageUpload=multer({storage:storage,
-    limits:{fileSize:9437184},
+    limits:{fileSize:4194304},
     fileFilter:Imagfilter
 });
 
@@ -54,18 +54,14 @@ router.post('/products',ImageUpload.single('productImage'),(req,res,next)=>{
         price:req.body.price,
         discount:req.body.discount,
         description:req.body.description,
-        productImage:req.file.path.replace("\\","/"),
-        storeMangerID:req.body.storeMangerID
+        productImage:req.file.path.replace("\\","/")
         
     });
     
     product.save()
     .then(single=>{
         console.log(single);
-        res.status(201).json({
-            message:'Successfully added',
-            createdProduct:single
-        });
+        res.status(201).json( single);
     
     })
     .catch(err=>{
@@ -148,8 +144,8 @@ router.patch('/products/:pidd',ImageUpload.single('productImage'),(req,res,next)
                     price:req.body.price,
                     discount:req.body.discount,
                     description:req.body.description,
-                    productImage:req.file.path.replace("\\","/"),
-                    storeMangerID:req.body.storeMangerID}
+                    productImage:req.file.path.replace("\\","/")
+                   }
                 }).exec().then(singleitem=>{
                     res.status(200).json(singleitem);
                 })
@@ -167,8 +163,8 @@ router.patch('/products/:pidd',ImageUpload.single('productImage'),(req,res,next)
                     category:req.body.category,
                     price:req.body.price,
                     discount:req.body.discount,
-                    description:req.body.description,
-                    storeMangerID:req.body.storeMangerID}
+                    description:req.body.description
+                    }
                 }).exec().then(singleitem=>{
                     res.status(200).json(singleitem);
                 })
