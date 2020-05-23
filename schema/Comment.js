@@ -8,6 +8,7 @@ const commentSchema = new Schema({
     message: { type: String},
     rating: { type: Number, required: true },
     user: {type: mongoose.Types.ObjectId, required: true, ref: 'register' },
+    product: {type: mongoose.Types.ObjectId, required: true, ref: 'StoreProducts' },
     //user: {type: Number, required: true},
 });
 
