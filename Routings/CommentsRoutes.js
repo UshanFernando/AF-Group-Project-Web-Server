@@ -29,6 +29,25 @@ router.get('/comments/:id',function(req,res,next){
       res.send(item);
     });
 });
+router.put("/comments", function (req, res, next) {
+  Comment.findByIdAndUpdate(
+    { _id: req.body.id },
+    {
+      message: req.body.message,
+    }
+  ).then(function () {
+    Comment.findOne({ _id: req.body.id }).then(function (single) {
+      res.send(single);
+    });
+  });
+});
+
+router.delete("/comments", function (req, res, next) {
+  Comment.findByIdAndRemove({ _id: req.body.id }).then(function (item) {
+    res.send(item);
+  });
+});
+
   
 
 module.exports=router;

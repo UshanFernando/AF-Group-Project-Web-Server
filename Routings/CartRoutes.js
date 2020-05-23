@@ -1,6 +1,8 @@
 const express=require('express');
 const router=express.Router();
 const Cart = require('../schema/Cart');
+//const auth = require("../Authentication/Auth");
+const StoreProducts = require('../schema/StoreManagerProducts');
 
 router.post('/newCart', function (req, res, next) {
     Cart.create({
@@ -21,5 +23,13 @@ router.post('/newCart', function (req, res, next) {
         res.send(item);
       });
   });
+  
+ 
+  router.get('/carts/:Uid', async function (req, res, next) {
+    const userId=req.params.Uid;
+     Cart.find({user:userId}).then(function (item) {
+       res.status(200).json(item);
+    });
 
+});
   module.exports=router;
