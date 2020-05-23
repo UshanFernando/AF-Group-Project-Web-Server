@@ -11,29 +11,29 @@ const Register = require('../schema/Register');
 
 // let SignupUsers = require('../models/signupusers');
 
-router.get('/delete-customer/:demail/', function (req) {
-    console.log('Delete Customers Called.');
+// router.get('/delete-customer/:demail/', function (req) {
+//     console.log('Delete Customers Called.');
 
-    console.log(req.params.demail);
+//     console.log(req.params.demail);
 
-    let Email = req.params.demail;
+//     let Email = req.params.demail;
 
-    let errors = req.validationErrors;
+//     let errors = req.validationErrors;
 
-    if(errors) {
-        console.log('error reported in customers');
-    } else {
-        Register.findOne({email:Email}, function(err,signupUser) {
-            if(signupUser) {
-                console.log('Customer Found');
-                SignupUsers.findByIdAndDelete(signupUser._id, function(err) {
-                    if(err) return console.log(err);
-                    console.log('Successfully Deleted Customer');
-                })
-            }
-        });
-    }
-});
+//     if(errors) {
+//         console.log('error reported in customers');
+//     } else {
+//         Register.findOne({email:Email}, function(err,signupUser) {
+//             if(signupUser) {
+//                 console.log('Customer Found');
+//                 SignupUsers.findByIdAndDelete(signupUser._id, function(err) {
+//                     if(err) return console.log(err);
+//                     console.log('Successfully Deleted Customer');
+//                 })
+//             }
+//         });
+//     }
+// });
 
 
 router.post("/reset", function (req, res, next) {
@@ -45,50 +45,50 @@ router.post("/reset", function (req, res, next) {
 
 
 
-router.post('/update-customer',function (req,res) {
+// router.post('/update-customer',function (req,res) {
 
-    console.log('update customer called');
-    console.log(req.body.uEmail);
-    console.log(req.body.uFname);
-    console.log(req.body.uLname);
-    console.log(req.body.uMobile);
-    console.log(req.body.uPassword);
+//     console.log('update customer called');
+//     console.log(req.body.uEmail);
+//     console.log(req.body.uFname);
+//     console.log(req.body.uLname);
+//     console.log(req.body.uMobile);
+//     console.log(req.body.uPassword);
 
-    let foundingEmail = req.body.uEmail;
-    let eFname = req.body.uFname;
-    let eLname = req.body.uLname;
-    let eMobile = req.body.uMobile;
-    let ePassword = req.body.uPassword;
+//     let foundingEmail = req.body.uEmail;
+//     let eFname = req.body.uFname;
+//     let eLname = req.body.uLname;
+//     let eMobile = req.body.uMobile;
+//     let ePassword = req.body.uPassword;
 
-     let errors = req.validationErrors;
+//      let errors = req.validationErrors;
 
-    if(errors) {
-        console.log('update error reported');
-    }
-    else {
+//     if(errors) {
+//         console.log('update error reported');
+//     }
+//     else {
 
-        Register.findOneAndUpdate({email:foundingEmail},{fName:eFname,lName:eLname,mobile:eMobile,password:ePassword}).then(function(updatedCustomer) {
-            if(updatedCustomer){
-                res.redirect('/Signin/CustomerProf/'+ updatedCustomer.email);    
-            }
+//         Register.findOneAndUpdate({email:foundingEmail},{fName:eFname,lName:eLname,mobile:eMobile,password:ePassword}).then(function(updatedCustomer) {
+//             if(updatedCustomer){
+//                 res.redirect('/Signin/CustomerProf/'+ updatedCustomer.email);    
+//             }
             
-        });
-    }
+//         });
+//     }
 
-});
+// });
 
-router.post('/logged/:gtoken', function(req, res){
-    console.log('log function called');
-    let logStatus = req.params.gtoken;
-    console.log(logStatus);
+// router.post('/logged/:gtoken', function(req, res){
+//     console.log('log function called');
+//     let logStatus = req.params.gtoken;
+//     console.log(logStatus);
 
-    if(logStatus){
-        // res.redirect('/Cart/'+logStatus);
-        console.log('If condition true');
-        // res.redirect('/CustomerProf/Cart/'+logStatus);
-        res.send(logStatus);
-    }
+//     if(logStatus){
+//         // res.redirect('/Cart/'+logStatus);
+//         console.log('If condition true');
+//         // res.redirect('/CustomerProf/Cart/'+logStatus);
+//         res.send(logStatus);
+//     }
 
-})
+// })
 
 module.exports = router;
