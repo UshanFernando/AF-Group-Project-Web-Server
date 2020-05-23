@@ -28,7 +28,7 @@ router.post('/newCart', function (req, res, next) {
   router.get('/carts/:Uid', async function (req, res, next) {
     const userId=req.params.Uid;
      Cart.find({user:userId}).then(function (item) {
-      res.send(item);
+       res.status(200).json(item);
     });
 
 });
