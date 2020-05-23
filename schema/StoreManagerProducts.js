@@ -27,11 +27,8 @@ const StoreManagerProducts=mongoose.Schema({
       productImage:{
         type:String,
     
-      },
-      storeMangerID:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'register'
       }
+     
   });
   
   module.exports=mongoose.model('StoreProducts',StoreManagerProducts);
