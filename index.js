@@ -1,5 +1,6 @@
 const express = require('express');
 const fis=require('fs');
+const path=require('path');
 const storeMangerRoutes = require('./Routings/StoreMangerRoutes/StoreMangerRoutes');
 const adminRoutes = require('./Routings/AdminRoutes');
 const commentsRoutes = require('./Routings/CommentsRoutes');
@@ -42,7 +43,7 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use(morgan("dev"));
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 app.use(Parsbdy.json());
 
 app.use('/admin', adminRoutes);
