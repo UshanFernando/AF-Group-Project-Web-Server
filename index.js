@@ -5,6 +5,7 @@ const adminRoutes = require('./Routings/AdminRoutes');
 const commentsRoutes = require('./Routings/CommentsRoutes');
 const wishListRoutes = require('./Routings/WishlistRoutes');
 const registerRoutes = require('./Routings/RegisterRoutes');
+const resetRoutes = require('./Routings/ResetRoutes')
 const Parsbdy = require('body-parser');
 const mongoose = require('mongoose');
 const cartRoutes=require('./Routings/CartRoutes');
@@ -46,6 +47,7 @@ app.use(Parsbdy.json());
 app.use('/admin', adminRoutes);
 app.use('/comment', commentsRoutes);
 app.use('/register', registerRoutes);
+app.use('/reset', resetRoutes);
 app.use('/cart', cartRoutes);
 app.use('/wishList', wishListRoutes);
 app.use('/login', loginRoutes);
