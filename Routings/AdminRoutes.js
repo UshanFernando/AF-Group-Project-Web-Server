@@ -52,7 +52,7 @@ router.post("/storemanager", auth, async function (req, res, next) {
         subject: "You have been promoted as store manager",
         text: "Use This username and password to log into site",
         html:
-          "<b>Email : " +
+          "<h2>Welcome to Fashion Store!<h2/><h3>Use This username and password to log into site<h3/> <br/> <b>Email : " +
           req.body.email +
           "</b> <br/> <b> Password : " +
           passGenaretd,
