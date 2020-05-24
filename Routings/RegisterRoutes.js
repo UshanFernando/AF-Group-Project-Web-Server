@@ -1,5 +1,7 @@
 const express=require('express');
+const auth = require("../Authentication/Auth");
 const router=express.Router();
+
 const Register = require('../schema/Register');
 
 router.post('/register', function (req, res, next) {
@@ -21,6 +23,12 @@ router.get('/register',function(req,res,next){
     Register.find({}).then(function(item){
       res.send(item);
     });
+});
+router.delete("/register/:Cid",auth, function (req, res, next) {
+  const customerId=req.params.Cid;
+  Register.findByIdAndRemove({ _id: customerId}).then(function (item) {
+    res.send(item);
+  });
 });
   
 
